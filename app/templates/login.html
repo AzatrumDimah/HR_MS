@@ -1,0 +1,51 @@
+<!-- app/templates/login.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        form {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px #ccc;
+        }
+        input {
+            width: 100%;
+            padding: 0.5rem;
+            margin-top: 1rem;
+        }
+        button {
+            margin-top: 1rem;
+            padding: 0.5rem;
+            width: 100%;
+        }
+        .message {
+            margin-top: 1rem;
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <form method="post" action="/login">
+        <h2>Login</h2>
+        <label>ID Number</label>
+        <input type="text" name="id_number" required>
+        <label>Password</label>
+        <input type="password" name="password" required>
+        <button type="submit">Login</button>
+        {% if message %}
+        <div class="message">{{ message }}</div>
+        {% endif %}
+    </form>
+</body>
+</html>

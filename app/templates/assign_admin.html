@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assign Admin Rights</title>
+</head>
+<body>
+    <h1>Assign Admin Rights</h1>
+
+    {% if message %}
+        <p><strong>{{ message }}</strong></p>
+    {% endif %}
+
+    <h2>Assign by ID Number</h2>
+    <form action="/assign_admin_manual" method="post">
+        <label for="admin_id_number">Admin ID Number:</label><br>
+        <input type="text" name="admin_id_number" required><br><br>
+
+        <label for="target_id_number">Target User ID Number:</label><br>
+        <input type="text" name="target_id_number" required><br><br>
+
+        <input type="submit" value="Assign Manually">
+    </form>
+
+    <hr>
+
+    <h2>Bulk Assign by Group/Division/Section</h2>
+    <form action="/assign_admin_bulk" method="post">
+        <label for="admin_id_number">Admin ID Number:</label><br>
+        <input type="text" name="admin_id_number" required><br><br>
+
+        <label for="group">Group:</label><br>
+        <input type="text" name="group" required><br><br>
+
+        <label for="division">Division:</label><br>
+        <input type="text" name="division" required><br><br>
+
+        <label for="section">Section:</label><br>
+        <input type="text" name="section" required><br><br>
+
+        <input type="submit" value="Bulk Assign">
+    </form>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assign Tasks</title>
+</head>
+<body>
+    <h1>Assign Tasks</h1>
+    <nav>
+        <a href="/my_tasks">🗂️ My Tasks</a>
+        <a href="/reset_password">🔁 Reset Password</a> |
+        <a href="/assign_tasks">📋 Assign Tasks</a> |
+        <a href="/confirm_tasks">✅ Confirm Tasks</a>
+    </nav>
+
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    {% for user in users_tasks %}
+        <hr>
+        <h2>{{ user.name }}</h2>
+
+        <h3>Current Tasks:</h3>
+        <ul>
+            {% for task in user.tasks %}
+                <li><strong>{{ task.title }}</strong>: {{ task.description }}</li>
+            {% endfor %}
+            {% if not user.tasks %}
+                <li>No tasks in progress</li>
+            {% endif %}
+        </ul>
+
+        <h3>Add New Task</h3>
+        <form action="/assign_tasks/add" method="post">
+            <input type="hidden" name="target_user_id" value="{{ user.id }}">
+
+            <label>Title:</label><br>
+            <input type="text" name="title" required><br>
+
+            <label>Description (optional):</label><br>
+            <input type="text" name="description"><br>
+
+            <label>Parent Task:</label><br>
+            <select name="parent_task_id">
+                <option value="None">None</option>
+                {% for task in admin_tasks %}
+                    <option value="{{ task.id }}">{{ task.title }}</option>
+                {% endfor %}
+            </select><br><br>
+
+            <button type="submit">Assign Task</button>
+        </form>
+    {% endfor %}
+</body>
+</html>

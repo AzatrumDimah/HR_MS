@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Confirm Tasks</title>
+    <style>
+        .task-in-progress {
+            background-color: #ffe5e5; /* light red */
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .task-completed {
+            background-color: #fff7cc; /* light yellow */
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .task-actions {
+            margin-top: 10px;
+        }
+
+        button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Confirm Task Completion</h1>
+    <nav>
+        <a href="/my_tasks">🗂️ My Tasks</a>
+        <a href="/reset_password">🔁 Reset Password</a> |
+        <a href="/assign_tasks">📋 Assign Tasks</a> |
+        <a href="/confirm_tasks">✅ Confirm Tasks</a>
+    </nav>    
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+
+    {% for user in users_tasks %}
+        <hr>
+        <h2>{{ user.name }}</h2>
+
+        {% if user.tasks %}
+            <ul>
+                {% for task in user.tasks %}
+                    <li class="{% if task.status == 'completed' %}task-completed{% else %}task-in-progress{% endif %}">
+                        <strong>{{ task.title }}</strong><br>
+                        {{ task.description }}
+
+                        <form class="task-actions" method="post" action="/confirm_tasks/action">
+                            <input type="hidden" name="task_id" value="{{ task.id }}">
+
+                            {% if task.status == 'completed' %}
+                                <button type="submit" name="action" value="confirm">✅ Confirm</button>
+                                <button type="submit" name="action" value="reopen">🔁 Reopen</button>
+                            {% elif task.status == 'in_progress' %}
+                                <button type="submit" name="action" value="complete">✔️ Mark as Completed</button>
+                            {% endif %}
+                        </form>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>No tasks found for {{ user.name }}.</p>
+        {% endif %}
+    {% endfor %}
+</body>
+</html>
